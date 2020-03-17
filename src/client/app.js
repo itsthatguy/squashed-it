@@ -1,7 +1,7 @@
-const iframe = document.querySelector('#audio')
-const player = document.querySelector('#player')
-const content = document.querySelector('.content')
-const confetti = document.querySelector('.wrapper')
+const iframe = document.querySelector('#audio');
+const player = document.querySelector('#player');
+const content = document.querySelector('.content');
+const confetti = document.querySelector('.wrapper');
 
 player.onended = function() {
   setTimeout(() => {
@@ -10,31 +10,61 @@ player.onended = function() {
   }, 1000);
 };
 
-var HOST = location.origin.replace(/^http/, 'ws')
-var sock = new WebSocket(HOST);
- sock.addEventListener('open', function() {
-     console.log('open');
- });
+function WebSocketClient() {
+  this.autoReconnectInterval = 5000;
+}
 
- sock.addEventListener('message', function(e) {
-     if (e.data == "playsound") {
-        console.log('PLAY SOUND');
-        content.classList.add('playing');
-        confetti.classList.add('playing');
-        player.volume = 1
-        player.play()
-     }
- });
+let HOST = location.origin.replace(/^http/, 'ws');
+WebSocketClient.prototype.open = function() {
+  this.ws = new WebSocket(HOST);
 
- sock.addEventListener('close', function() {
-     console.log('close');
- });
+  this.ws.addEventListener('open', () => {
+    console.log('WebSocketClient: Open');
+    this.heartbeat = setInterval(() => this.ws.send('heartbeat'), 5000);
+  });
+
+  this.ws.addEventListener('message', e => {
+    if (e.data == 'playsound') {
+      console.log('PLAY SOUND');
+      content.classList.add('playing');
+      confetti.classList.add('playing');
+      player.volume = 1;
+      player.play();
+    }
+  });
+
+  this.ws.addEventListener('close', e => {
+    switch (e.code) {
+      case 1000: // CLOSE_NORMAL
+        console.log('WebSocket: closed');
+        break;
+      default:
+        // Abnormal closure
+        clearInterval(this.heartbeat);
+        this.reconnect(e);
+        break;
+    }
+  });
+};
+
+WebSocketClient.prototype.reconnect = function(e) {
+  console.log(`WebSocketClient: retry in ${this.autoReconnectInterval}ms`, e);
+  let that = this;
+  setTimeout(() => {
+    console.log('WebSocketClient: reconnecting...');
+    that.open();
+  }, this.autoReconnectInterval);
+};
+
+WebSocketClient.prototype.send = function(...args) {
+  this.ws.send(...args);
+};
+
+const websocket = new WebSocketClient();
+websocket.open();
 
 document.querySelector('.clickme').addEventListener('click', () => {
-  sock.send('playsound');
+  websocket.send('playsound');
 });
 
-iframe.volume = 0
-player.volume = 0
-
-setInterval(() => sock.send('heartbeat'), 5000)
+player.volume = 0;
