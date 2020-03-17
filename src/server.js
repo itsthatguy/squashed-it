@@ -51,5 +51,5 @@ wss.on('connection', function(ws, request) {
 //   console.log('socket', req.testing);
 // });
 
-const port = 8080
-server.listen(8080, () => console.log(`Server listening on http://localhost:${port}.`));
+const port = process.env.PORT || 8080
+server.listen(port, () => console.log(`Server listening on http://localhost:${port}.`));
