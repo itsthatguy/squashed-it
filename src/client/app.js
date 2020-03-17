@@ -1,4 +1,4 @@
-var sock = new WebSocket('ws://localhost:8080');
+var sock = new WebSocket(`ws://${window.location.host}`);
  sock.addEventListener('open', function() {
      console.log('open');
      sock.send('playsound');
