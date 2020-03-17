@@ -1,5 +1,14 @@
 const iframe = document.querySelector('#audio')
 const player = document.querySelector('#player')
+const content = document.querySelector('.content')
+const confetti = document.querySelector('.wrapper')
+
+player.onended = function() {
+  setTimeout(() => {
+    content.classList.remove('playing');
+    confetti.classList.remove('playing');
+  }, 1000);
+};
 
 var HOST = location.origin.replace(/^http/, 'ws')
 var sock = new WebSocket(HOST);
@@ -10,6 +19,8 @@ var sock = new WebSocket(HOST);
  sock.addEventListener('message', function(e) {
      if (e.data == "playsound") {
         console.log('PLAY SOUND');
+        content.classList.add('playing');
+        confetti.classList.add('playing');
         player.volume = 1
         player.play()
      }

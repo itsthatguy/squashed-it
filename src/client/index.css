@@ -1,0 +1,84 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+body {
+  background-color: #342f36;
+  color: #efefef;
+  font-family: 'Comic Sans MS';
+}
+
+h1 {
+  margin-top: 0;
+  font-size: 84px;
+  text-shadow: 0 2px 3px #342f36;
+}
+
+.content.playing h1, .content.playing button {
+  animation-name: dance;
+  animation-duration: 1s;
+  animation-direction: alternate-reverse;
+  animation-iteration-count: 3;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+  animation-name: fade-in;
+  animation-duration: 3.6s;
+}
+
+.content.playing:after {
+  content: '';
+  background-image: url(cat-party.gif);
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+  animation-name: example;
+  animation-duration: 3.6s;
+}
+
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes dance {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(15deg);}
+  75% { transform: rotate(-15deg);}
+  100% { transform: rotate(0deg);}
+}
+
+@keyframes example {
+  0% { opacity: 0; }
+  30% { opacity: 1; }
+  70% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+button {
+  box-shadow: 0 0 0 4px #368557, 0 10px 0 4px #2f7842;
+  width: 200px;
+  height: 200px;
+  background-color: #43e686;
+  color: white;
+  text-shadow: 0 2px 0 rgba(54, 130, 87, 0.5);
+  font-family: 'Comic Sans MS';
+  font-size: 28px;
+  border: none;
+  border-radius: 400px;
+  outline: none;
+}
+
