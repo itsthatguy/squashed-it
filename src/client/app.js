@@ -1,4 +1,5 @@
-var sock = new WebSocket(`ws://${window.location.host}`);
+var HOST = location.origin.replace(/^http/, 'ws')
+var sock = new WebSocket(HOST);
  sock.addEventListener('open', function() {
      console.log('open');
      sock.send('playsound');
