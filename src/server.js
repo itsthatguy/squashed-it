@@ -22,6 +22,9 @@ const broadcast = data => {
 };
 
 wss.on('connection', function(ws, request) {
+
+  broadcast(JSON.stringify({ event: 'CLIENTS', count: wss.clients.size }));
+
   ws.on('message', function(message) {
     if (message == 'playsound') {
       broadcast('playsound');

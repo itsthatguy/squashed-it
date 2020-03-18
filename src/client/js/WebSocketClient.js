@@ -46,7 +46,17 @@ class WebSocketClient {
 
   send = (...args) => this.ws.send(...args)
 
-  onmessage = e => (e.data == 'playsound') && StateMachine.startPlaying()
+  onmessage = e => {
+    if (e.data == 'playsound') return StateMachine.startPlaying()
+    try {
+      const data = JSON.parse(e.data);
+      if (data.event == "CLIENTS") {
+        return StateMachine.updateUsers(data.count);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   reconnect (e) {
     console.log(`WebSocketClient: retry in ${this.autoReconnectInterval}ms`, e);

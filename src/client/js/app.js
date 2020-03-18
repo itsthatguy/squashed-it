@@ -10,6 +10,9 @@ export default class App {
     this.confetti = document.querySelector('.wrapper');
     this.holdPlease = document.querySelector('.hold-please');
     this.clickme = document.querySelector('.clickme');
+    this.users = document.querySelector('.users');
+
+    this.player.volume = 0;
 
     this.player.onended = function() {
       setTimeout(() => StateMachine.stopPlaying(), 1000);

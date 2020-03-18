@@ -9,6 +9,10 @@ class StateMachine {
     this.app = app;
   }
 
+  updateUsers = (num) => {
+    this.app.users.innerHTML = `${num} users connected`;
+  }
+
   startPlaying () {
     this.app.content.classList.add('playing');
     this.app.confetti.classList.add('playing');
