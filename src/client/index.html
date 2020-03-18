@@ -6,11 +6,19 @@
   <title>Squashed It!</title>
   <link rel="stylesheet" href="index.css">
   <link rel="stylesheet" href="confetti.css">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
 </head>
 <body>
   <div class="content">
     <h1>Squash Party!!</h1>
     <button class="clickme">Squashed One!</button>
+  </div>
+
+  <div class="hold-please">
+    <h1>Hold Please</h1>
+    <h2>Server updating...</h2>
   </div>
 
   <div class="wrapper">
@@ -167,8 +175,8 @@
   </div>
 
   <iframe src="silence.mp3" allow="autoplay" id="audio" style="display: none"></iframe>
-  <audio id="player" autoplay controls style="display: none"><source src="dance-party.mp3" type="audio/mp3"></audio>
+  <audio id="player" autoplay muted style="display: none"><source src="dance-party.mp3" type="audio/mp3"></audio>
 
-  <script src="./app.js"></script>
+  <script src="./js/index.js" type="module" async></script>
 </body>
 </html>

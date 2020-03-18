@@ -4,7 +4,7 @@ const WebSocket = require('ws');
 
 const port = process.env.PORT || 8080;
 var server = express()
-  .use(express.static(path.join(__dirname, 'client')))
+  .use(express.static(path.join(__dirname, 'client'), { maxAge: 0 }))
   .get('/', function(req, res) {
     res.sendFile(path.join(__dirname, 'client', 'index.html'));
   })
